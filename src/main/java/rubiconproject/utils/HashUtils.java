@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.utils;
 
 import lombok.extern.java.Log;
 import org.apache.commons.codec.digest.DigestUtils;

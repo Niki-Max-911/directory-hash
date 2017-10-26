@@ -1,0 +1,9 @@
+To build and package current program you have to install Maven 3.3.9.
+Assure that your MAVEN_HOME environment variable is right assigned.
+Java 8 is required.
+
+To build and package program with Maven execute following command:
+mvn clean package
+
+To run program from jar use:
+java -jar directory-hash-1.0.jar dir_path_to_scan

@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.filescanner;
 
 import lombok.Data;
 

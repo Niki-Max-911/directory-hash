@@ -1,9 +1,10 @@
-package rubiconproject;
+package rubiconproject.utils;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import rubiconproject.utils.FileUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

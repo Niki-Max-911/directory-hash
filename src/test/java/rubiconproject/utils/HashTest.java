@@ -1,4 +1,4 @@
-package rubiconproject;
+package rubiconproject.utils;
 
 
 import lombok.SneakyThrows;
@@ -62,7 +62,7 @@ public class HashTest {
         Assert.assertTrue(dirHash.matches("9dd88c920.+?40c9964.*"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IOException.class)
     @SneakyThrows
     public void exampleFileHashFromDirectoryTest() {
         URL fileUrl = HashTest.class.getClassLoader().getResource("input/bar");//search in classpath
