@@ -12,7 +12,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-public class HashTest {
+/**
+ * Test for {@link HashUtils}.
+ *
+ * @author maksimnikitin
+ * @since 26.10.17
+ */
+public class HashUtilsTest {
 
     /**
      * Specifically that SHA-512 hash("hello world") will be 309ecc...
@@ -31,7 +37,7 @@ public class HashTest {
     @Test
     @SneakyThrows
     public void exampleFileHashTest() {
-        URL fileUrl = HashTest.class.getClassLoader().getResource("input/bar/fileA.dat");//search in classpath
+        URL fileUrl = HashUtilsTest.class.getClassLoader().getResource("input/bar/fileA.dat");//search in classpath
         Path filePath = Paths.get(fileUrl.toURI());
         String hash = HashUtils.getSha512FileAsHex(filePath);
         Assert.assertTrue(hash.startsWith("af371785c4fe"));
@@ -43,7 +49,7 @@ public class HashTest {
     @Test
     @SneakyThrows
     public void exampleDirectoryHashTest() {
-        URL directoryUrl = HashTest.class.getClassLoader().getResource("input/faz");//search in classpath
+        URL directoryUrl = HashUtilsTest.class.getClassLoader().getResource("input/faz");//search in classpath
         Path directoryPath = Paths.get(directoryUrl.toURI());
 
         String dirHash = Files.list(directoryPath)//dir calculate
@@ -65,7 +71,7 @@ public class HashTest {
     @Test(expected = IOException.class)
     @SneakyThrows
     public void exampleFileHashFromDirectoryTest() {
-        URL fileUrl = HashTest.class.getClassLoader().getResource("input/bar");//search in classpath
+        URL fileUrl = HashUtilsTest.class.getClassLoader().getResource("input/bar");//search in classpath
         Path dirPath = Paths.get(fileUrl.toURI());
         HashUtils.getSha512FileAsHex(dirPath);
         Assert.fail();

@@ -5,6 +5,7 @@ import rubiconproject.utils.HashUtils;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -13,7 +14,9 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
- * TODO: description
+ * Walks a file tree and calculate hash for files and directories.
+ * Use this type instance in {@link java.nio.file.Files#walkFileTree} to visit each file in a file tree.
+ * After walking result will be available in {@link HashFileVisitorImpl#getFilesHashSet}.
  *
  * @author maksimnikitin
  * @since 26.10.17
@@ -65,10 +68,17 @@ public class HashFileVisitorImpl extends SimpleFileVisitor<Path> {
         return super.postVisitDirectory(dir, exc);
     }
 
-    @Override
-    public String toString() {
-        return filesHashSet.stream()
-                .map(FileHashContainer::toString)
-                .collect(Collectors.joining("", "", "\n"));
+    /**
+     * Perform visiting files/dirs in a file tree and calculate its hashes.
+     * Method uses {@link HashFileVisitorImpl}.
+     *
+     * @param start the starting file path.
+     * @return list of containers with path and according hash.
+     * @throws IOException exception during walking.
+     */
+    public static TreeSet<FileHashContainer> scanFileTree(Path start) throws IOException {
+        HashFileVisitorImpl visitor = new HashFileVisitorImpl();
+        Files.walkFileTree(start, visitor);
+        return visitor.getFilesHashSet();
     }
 }

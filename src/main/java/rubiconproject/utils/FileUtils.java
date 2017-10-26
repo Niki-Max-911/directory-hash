@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
 import java.util.List;
 
 /**
@@ -30,15 +30,17 @@ public class FileUtils {
         Path fileResultPath = null;
         try {
             fileResultPath = createFile(path);
+            log.info("Result file have just been created: \n" + fileResultPath);
         } catch (URISyntaxException | IOException e) {
-            log.info("Result file can't be created.");
+            log.severe("Result file can't be created.");
             e.printStackTrace();
         }
+
 
         try {
             Files.write(fileResultPath, lines);
         } catch (IOException e) {
-            log.info("Result file can't be written.");
+            log.severe("Result file can't be written.");
             e.printStackTrace();
         }
     }
@@ -58,5 +60,4 @@ public class FileUtils {
         }
         return Files.createFile(resultFilePath);
     }
-
 }
