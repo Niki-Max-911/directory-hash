@@ -61,6 +61,6 @@ public class FileUtilsTest {
 
     private Path getFilePath() {
         Path dirPath = dirResource.getRoot().toPath();
-        return Paths.get(dirPath.toString(), FILE_NAME);//join dir path and future filename
+        return dirPath.resolve(FILE_NAME);
     }
 }

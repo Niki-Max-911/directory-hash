@@ -54,7 +54,7 @@ public class FileUtils {
         if (Files.exists(resultFilePath)) {
             String updatedFileName =
                     String.format("%d-%s", System.currentTimeMillis(), resultFilePath.getFileName().toString());
-            resultFilePath = Paths.get(resultFilePath.getParent().toString(), updatedFileName);
+            resultFilePath = resultFilePath.resolveSibling(updatedFileName);
         }
         return Files.createFile(resultFilePath);
     }
