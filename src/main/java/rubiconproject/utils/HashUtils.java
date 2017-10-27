@@ -43,8 +43,8 @@ public class HashUtils {
         try {
             fileBytes = Files.readAllBytes(path);
         } catch (IOException e) {
-            log.throwing("HashUtils", "getSha512FileAsHex", e);
             log.severe("Hash SHA512 calculation intercepted. Cause is file related exception.");
+            log.throwing("HashUtils", "getSha512FileAsHex", e);
             throw e;
         }
         return getSha512AsHex(fileBytes);

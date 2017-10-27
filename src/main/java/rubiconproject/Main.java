@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 
 /**
  * Entry point.
@@ -36,10 +36,12 @@ public class Main {
     }
 
     private static void setUpLogger() {
-        String level = System.getProperty("rubicon.directoryhash.log.level");
-        Optional.ofNullable(level)
-                .map(Level::parse)
-                .ifPresent(log::setLevel);
+        try (InputStream propertiesIS = Main.class.getClassLoader().getResourceAsStream("logging.properties")) {
+            LogManager.getLogManager().readConfiguration(propertiesIS);
+        } catch (IOException e) {
+            log.severe("Log property loading fail.");
+            log.throwing("Main", "setUpLogger", e);
+        }
     }
 
     private static void loadProperties() {

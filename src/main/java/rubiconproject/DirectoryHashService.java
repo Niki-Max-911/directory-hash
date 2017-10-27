@@ -33,8 +33,8 @@ public class DirectoryHashService {
         try {
             Files.walkFileTree(inputPath, visitor);
         } catch (IOException e) {
-            log.throwing("DirectoryHashService", "performHashCalculating", e);
             log.severe("Excepting during file tree walking.");
+            log.throwing("DirectoryHashService", "performHashCalculating", e);
             return;
         }
 
@@ -54,7 +54,7 @@ public class DirectoryHashService {
                 Files.createDirectory(outPath.getParent());
             }
             FileUtils.writeFile(outPath, resultLines);
-            log.severe("Result file have just been created: \n" + outPath);
+            log.info("Result file have just been created: " + outPath);
         } catch (URISyntaxException | IOException e) {
             log.severe("Result file can't be created.");
         }
