@@ -67,18 +67,4 @@ public class HashFileVisitorImpl extends SimpleFileVisitor<Path> {
 
         return super.postVisitDirectory(dir, exc);
     }
-
-    /**
-     * Perform visiting files/dirs in a file tree and calculate its hashes.
-     * Method uses {@link HashFileVisitorImpl}.
-     *
-     * @param start the starting file path.
-     * @return list of containers with path and according hash.
-     * @throws IOException exception during walking.
-     */
-    public static TreeSet<FileHashContainer> scanFileTree(Path start) throws IOException {
-        HashFileVisitorImpl visitor = new HashFileVisitorImpl();
-        Files.walkFileTree(start, visitor);
-        return visitor.getFilesHashSet();
-    }
 }

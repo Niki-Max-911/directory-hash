@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 
 /**
  * Entry point.
@@ -19,8 +21,8 @@ import java.util.logging.ConsoleHandler;
 public class Main {
 
     static {
-        log.addHandler(new ConsoleHandler());
         loadProperties();
+        setUpLogger();
     }
 
     public static void main(String[] args) {
@@ -29,15 +31,16 @@ public class Main {
             System.exit(1);
         }
 
-        try {
-            Path targetPath = Paths.get(args[0]);
-            DirectoryHashService.performHashCalculating(targetPath);
-        } catch (IOException e) {
-            log.severe("Excepting during file tree walking.");
-            e.printStackTrace();
-        }
+        Path targetPath = Paths.get(args[0]);
+        DirectoryHashService.performHashCalculating(targetPath);
     }
 
+    private static void setUpLogger() {
+        String level = System.getProperty("rubicon.directoryhash.log.level");
+        Optional.ofNullable(level)
+                .map(Level::parse)
+                .ifPresent(log::setLevel);
+    }
 
     private static void loadProperties() {
         try (InputStream propertiesIS = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
@@ -48,7 +51,8 @@ public class Main {
             });
         } catch (IOException e) {
             log.severe("Property loading fail.");
-            e.printStackTrace();
+            log.throwing("Main", "loadProperties", e);
+            System.exit(1);
         }
     }
 }

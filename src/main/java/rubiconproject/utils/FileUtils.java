@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
 import java.util.List;
 
 /**
@@ -26,22 +25,20 @@ public class FileUtils {
      * @param path  asked file path.
      * @param lines target lines to saving.
      */
-    public static void writeFile(Path path, List<? extends CharSequence> lines) {
-        Path fileResultPath = null;
+    public static void writeFile(Path path, List<? extends CharSequence> lines) throws IOException, URISyntaxException {
+        Path fileResultPath;
         try {
             fileResultPath = createFile(path);
-            log.info("Result file have just been created: \n" + fileResultPath);
         } catch (URISyntaxException | IOException e) {
-            log.severe("Result file can't be created.");
-            e.printStackTrace();
+            log.throwing("FileUtils", "writeFile", e);
+            throw e;
         }
-
 
         try {
             Files.write(fileResultPath, lines);
         } catch (IOException e) {
-            log.severe("Result file can't be written.");
-            e.printStackTrace();
+            log.throwing("FileUtils", "writeFile", e);
+            throw e;
         }
     }
 
